@@ -1,7 +1,7 @@
 FILES = *.tex *.bib */*.tex */images/*.pdf
 
-TEX = pdflatex -synctex=1 -interaction=nonstopmode -file-line-error > /dev/null
-BIB = bibtex > /dev/null
+TEX = pdflatex -synctex=1 -interaction=nonstopmode -file-line-error
+BIB = bibtex
 
 default: report.pdf
 

@@ -1,0 +1,47 @@
+\subsection{True Positives}
+
+\subsubsection{\texttt{4dd75b33}}
+
+\noindent The patch \texttt{4dd75b33} patches a double unlock error in the file \texttt{fs/ubifs/orphan.c}, part of the file system components of the kernel.
+\\
+
+\noindent The function \texttt{orphan\_delete} contains two \texttt{if} statements which, if evaluating to \texttt{true} will result in a double unlock of \texttt{\&c->orphan\_lock}, since the function \texttt{ubifs\_delete\_orphan} calls \texttt{orphan\_delete} and then unlock the same pointer value. 
+\\
+
+\noindent The full code snippet for this function can be seen in Fig. \ref{fig:orphan.c}.
+\\
+
+\begin{figure}[h]
+    \centering
+    \begin{verbatim}
+        void ubifs_delete_orphan(struct ubifs_info *c, ino_t inum)
+        {
+            [...]
+            
+            orphan_delete(c, orph);
+
+            spin_unlock(&c->orphan_lock);
+        }
+
+
+        static void orphan_delete(struct ubifs_info *c, 
+            struct ubifs_orphan *orph)
+        {
+            if (orph->del) {
+                spin_unlock(&c->orphan_lock);
+                dbg_gen("deleted twice ino %lu", orph->inum);
+                return;
+            }
+            if (orph->cmt) {
+                orph->del = 1;
+                orph->dnext = c->orph_dnext;
+                c->orph_dnext = orph;
+                spin_unlock(&c->orphan_lock);
+                dbg_gen("delete later ino %lu", orph->inum);
+                return;
+            }
+        }
+    \end{verbatim}
+    \caption{The \texttt{orphan\_delete} function containing a double unlock.}
+    \label{fig:orphan.c}
+\end{figure}

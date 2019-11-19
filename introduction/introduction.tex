@@ -1,0 +1,24 @@
+\section{Introduction}
+
+\noindent The Linux kernel supports a vast array of computer architectures and runs on a multitude of devices from personal computers to servers and embedded devices from everything from wireless access points to smart TVs, smartphones and refrigerators.
+Errors in the Linux kernel therefore affect a multitude of devices and therefore have a potential significant negative impact. \\
+
+\noindent An important aspect of kernel programming is management and manipulation of resources, be it devices, file handles, memory blocks, and locks. Locks are used extensively in the C source code of the Linux kernel in order to allow parallelization of subsystems within the kernel while at the same time avoiding race conditions. Static analysers allow detection of errors in the C source code of the Linux kernel by reasoning about this resource manipulation. A control flow graph can be found for the components of the kernel, which can then in turn be statically analysed to detect possible ressource manipulation errors. \\
+
+\noindent One such resource manipulation error is a \textit{double unlock} error. A thread holding a lock and then releasing this lock more than once will result in undefined behaviour, according to the POSIX standard. This standard is an attempt to generate a standard version of UNIX to facilitate application portability and defines how C constructs should be implemented by UNIX OS vendors. The \texttt{pthread.h} file defines the spinlock constructs which are used in the Linux kernel and the accompanying specification is of note here, since this file describes how the structs found in the header should behave. The section describing \texttt{pthread\_spin\_unlock} defines the behaviour of the \texttt{spin\_unlock} unlocking operation of a spinlock observed in the kernel code, and is defined as:
+
+\begin{center}
+"The results are undefined if the lock is not held by the calling thread.
+[...] 
+The results are undefined if this function is called with an uninitialized thread spin lock." \cite{unlockPOSIX} \\
+\end{center}
+
+\noindent If a thread wanting to unlock a lock does not currently hold that lock, the lock has either been unlocked already or has never been locked. This will in both instances lead to undefined behaviour at a kernel level, possibly making the operating system behave in unexpected ways. \\
+
+\noindent Undefined behaviour is problematic since a program depending on undefined behaviour might not break today, but could break in the future. E.g. if a program depending on undefined behaviour has been implemented on an assumption that the output of the undefined behaviour will always be within a certain interval, but due to the nature of undefined behaviour this changes in a compiler update, the program suddenly breaks, leading to a software panic. Undefined behaviour is exactly that - \textit{undefined} - and assumptions can therefore not be made about its output. \\
+
+\noindent Developing a way to detect such errors is desirable in order to allow developers to detect errors in their code, leading to safer programs. An implementation for detecting such errors can furthermore be used as a tool for evaluating the performance of other code analysis tools, such as a tool for automated software repair. Patching the inverse error, a double lock error, could potentially introduce an unwanted double unlock error in the code. An implementation of a double unlock checker could serve as a correctness evaluation tool, and as a test harness for automated double lock repair. \\
+
+\todo{Problem definition statement - should be very clear in the introduction, using bold font, a label "problem" a box, or something like this.}
+
+\noindent This report will detail our approach for detecting such double unlock errors based on previous work, give an overview of the concrete implementation of our approach and finally evaluate results of validating files in the Linux kernel components.
