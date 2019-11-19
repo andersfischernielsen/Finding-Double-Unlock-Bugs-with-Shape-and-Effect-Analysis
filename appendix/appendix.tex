@@ -1,0 +1,46 @@
+\section{Appendix}
+\subsection{Confirmed Double Unlock Bugs}
+
+\begin{verbatim}
+|  File                                       | Present in | Patched in |
+|---------------------------------------------|------------|------------|
+| drivers/block/drbd/drbd_main.c              | b0814361   | 8e9c5230   |
+| fs/ubifs/orphan.c                           | 7542c6de   | 4dd75b33   | 
+| drivers/gpu/drm/nouveau/nouveau_svm.c       | 5fbcf501   | de4ee728   |
+| fs/btrfs/file.c                             | 78e03651   | f49aa1de   |
+| drivers/staging/wilc1000/wilc_wlan.c        | ca641bae   | fea69916   |
+| drivers/staging/kpc2000/kpc_dma/fileops.c   | d4c596eb   | c85aa326   |
+| fs/nfs/client.c                             | a46126cc   | c260121a   |
+| fs/btrfs/file.c                             | 2b90883c   | 8fca9550   |
+| drivers/media/dvb-core/dvbdev.c             | ded71626   | 122d0e8d   |
+| mm/memory_hotplug.c                         | 6376360e   | e3df4c6e   |
+| sound/soc/codecs/pcm512x.c                  | fd270fca   | 28b698b7   |
+| drivers/target/target_core_user.c           | 807cf197   | f0e89aae   |
+| drivers/rpmsg/qcom_smd.c                    | fb416f69   | c3388a07   |
+| drivers/scsi/aacraid/commsup.c              | 09624645   | d844752e   |
+| drivers/staging/rtl8188eu/os_dep/usb_intf.c | 612e1c94   | 23bf4042   |
+| block/blk-cgroup.c                          | e0223003   | bbb427e3   |
+\end{verbatim}
+
+\subsection{Evaluation Results}
+
+\begin{verbatim}
+|  File                                                  | Status       | 
+|--------------------------------------------------------|--------------|
+| drivers/block/drbd/drbd_main.c                         | Parser error | 
+| fs/ubifs/orphan.c                                      | Detected     | 
+| drivers/gpu/drm/nouveau/nouveau_svm.c                  | Parser error | 
+| fs/btrfs/file.c                                        | Parser error | 
+| drivers/staging/wilc1000/wilc_wlan.c                   | Parser error | 
+| drivers/staging/kpc2000/kpc_dma/fileops.c              | Parser error | 
+| fs/nfs/client.c                                        | Parser error | 
+| fs/btrfs/file.c                                        | Parser error | 
+| drivers/media/dvb-core/dvbdev.c                        | Parser error | 
+| mm/memory_hotplug.c                                    | Parser error | 
+| sound/soc/codecs/pcm512x.c                             | Parser error | 
+| drivers/target/target_core_user.c                      | Parser error | 
+| drivers/rpmsg/qcom_smd.c                               | Parser error | 
+| drivers/scsi/aacraid/commsup.c                         | Parser error | 
+| drivers/staging/rtl8188eu/os_dep/usb_intf.c            | Parser error | 
+| block/blk-cgroup.c                                     | Parser error | 
+\end{verbatim}

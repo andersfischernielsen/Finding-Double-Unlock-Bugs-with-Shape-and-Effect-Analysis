@@ -1,0 +1,220 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  8pt,
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[landscape,margin=0.5in]{geometry}
+\usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\date{}
+
+\begin{document}
+
+\hypertarget{confirmed-double-unlock-bugs}{%
+\section{Confirmed Double Unlock
+Bugs}\label{confirmed-double-unlock-bugs}}
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+\begin{minipage}[b]{0.34\columnwidth}\raggedright
+File\strut
+\end{minipage} & \begin{minipage}[b]{0.28\columnwidth}\raggedright
+Present in\strut
+\end{minipage} & \begin{minipage}[b]{0.28\columnwidth}\raggedright
+Fixed in\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.34\columnwidth}\raggedright
+drivers/block/drbd/drbd\_main.c\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+b0814361a25cba73a224548843ed92d8ea78715a\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+8e9c523016cf9983b295e4bc659183d1fa6ef8e0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.34\columnwidth}\raggedright
+fs/ubifs/orphan.c\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+7542c6dedbc1caa284ca4cbd6b64f99023ff1b97\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+4dd75b335bc1f10fb1a01b5cd58870d47c13c4e7\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.34\columnwidth}\raggedright
+drivers/gpu/drm/nouveau/nouveau\_svm.c\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+5fbcf5015db8e9f04a9da6d40322622fa229da54\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+de4ee728465f7c0c29241550e083139b2ce9159c\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.34\columnwidth}\raggedright
+fs/btrfs/file.c\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+78e03651849fd3e8aa9ab3288bc1d3726c4c6129\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+f49aa1de98363b6c5fba4637678d6b0ba3d18065\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.34\columnwidth}\raggedright
+drivers/staging/wilc1000/wilc\_wlan.c\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+~ca641bae6da977d638458e78cd1487b6160a2718\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+fea69916360468e364a4988db25a5afa835f3406\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.34\columnwidth}\raggedright
+drivers/staging/kpc2000/kpc\_dma/fileops.c\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+~d4c596ebf62760b89ec3d0a2cbc94e2632395eec\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+c85aa326f5c5cc73bad4381498fd2bda1bb41c27\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.34\columnwidth}\raggedright
+fs/nfs/client.c\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+~a46126ccc77e764429d63bf958d117f607f4b6c6\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+c260121a97a3e4df6536edbc2f26e166eff370ce\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.34\columnwidth}\raggedright
+fs/btrfs/file.c\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+~2b90883c561ddcc641741c2e4df1f702a4f2acb8\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+8fca955057b9c58467d1b231e43f19c4cf26ae8c\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.34\columnwidth}\raggedright
+drivers/media/dvb-core/dvbdev.c\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+~ded716267196862809e5926072adc962a611a1e3\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+122d0e8dd050cc5dc3fb9e9b5f2dee3c5276ce35\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.34\columnwidth}\raggedright
+mm/memory\_hotplug.c\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+~6376360ecbe525a9c17b3d081dfd88ba3e4ed65b\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+e3df4c6e4836ce93cd5cf92d9cbdeaf4439a0241\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.34\columnwidth}\raggedright
+sound/soc/codecs/pcm512x.c\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+~fd270fca2001bcdac0658eb673c20920baeed86c\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+28b698b7342c7d5300cfe217cd77ff7d2a55e03d\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.34\columnwidth}\raggedright
+drivers/target/target\_core\_user.c\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+~807cf197fc9a3bc156523cb68786a9cb0ec396b4\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+f0e89aae609bebd430ce7a96d2f642917d89ca57\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.34\columnwidth}\raggedright
+drivers/rpmsg/qcom\_smd.c\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+~fb416f69900773d5a6030c909114099f92d07ab9\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+c3388a075c8ac568f892c40bec919ba8ac4077f0\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.34\columnwidth}\raggedright
+drivers/scsi/aacraid/commsup.c\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+~09624645e1e85df8d68b04de6e0607d696268333\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+d844752e1801099f92c178845f56412861a2b4af\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.34\columnwidth}\raggedright
+drivers/staging/rtl8188eu/os\_dep/usb\_intf.c\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+612e1c94bfe9736cef0a9b86db792fd863be7733\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+23bf40424a0f641ca7ff4225add4aa592086bdd5\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.34\columnwidth}\raggedright
+block/blk-cgroup.c\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+e0223003e6e141533446d01a92784592a97a8552\strut
+\end{minipage} & \begin{minipage}[t]{0.28\columnwidth}\raggedright
+bbb427e342495df1cda10051d0566388697499c0\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{results}{%
+\subsection{Results}\label{results}}
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+File & Status\tabularnewline
+\midrule
+\endhead
+drivers/block/drbd/drbd\_main.c & Parser error\tabularnewline
+fs/ubifs/orphan.c & Detected\tabularnewline
+drivers/gpu/drm/nouveau/nouveau\_svm.c & Parser error\tabularnewline
+fs/btrfs/file.c & Parser error\tabularnewline
+drivers/staging/wilc1000/wilc\_wlan.c & Parser error\tabularnewline
+drivers/staging/kpc2000/kpc\_dma/fileops.c & Parser error\tabularnewline
+fs/nfs/client.c & Parser error\tabularnewline
+fs/btrfs/file.c & Parser error\tabularnewline
+drivers/media/dvb-core/dvbdev.c & Parser error\tabularnewline
+mm/memory\_hotplug.c & Parser error\tabularnewline
+sound/soc/codecs/pcm512x.c & Parser error\tabularnewline
+drivers/target/target\_core\_user.c & Parser error\tabularnewline
+drivers/rpmsg/qcom\_smd.c & Parser error\tabularnewline
+drivers/scsi/aacraid/commsup.c & Parser error\tabularnewline
+drivers/staging/rtl8188eu/os\_dep/usb\_intf.c & Parser
+error\tabularnewline
+block/blk-cgroup.c & Parser error\tabularnewline
+\bottomrule
+\end{longtable}
+
+\end{document}
