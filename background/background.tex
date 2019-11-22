@@ -6,32 +6,32 @@ The shape-and-effect inference system described by Abal et. al. \cite{Abal2017Ef
  
 \noindent Abal et. al. describe a method for detecting double-lock bugs in the kernel source code using the EBA analyzer. \\
 
-\noindent Extending the approach used by Iago et. al. allows emplying the same shape and effect analysis concepts in addition to the CFL problem formulation used in their approach. Furthermore, extending the implementation of their tool allows building an error checker which is already able to run on the Linux kernel components. 
+\noindent Extending the approach used by Iago et. al. allows emplying the same shape and effect analysis concepts in addition to the CFL problem formulation used in their approach. Furthermore, extending the implementation of their tool allows building an error checker which is already able to run on the Linux kernel components. \\
 
-\noindent The Linux kernel component source code can be analyzed using existing static analysis tools in order to find a Control Flow Graph (CFG) of a given component implementation. 
-
-\todo[inline]{More CFG explanation}
-
-\todo[inline]{Quickly describe that the same source language is used in this project}
+\noindent The Linux kernel component source code can be analyzed using existing static analysis tools in order to find a Control Flow Graph (CFG) of a given component implementation. The control flow graph of a given Linux kernel component shows the possible execution paths of the component. These control flow graphs can be formulated in Computational Tree Logic, which in turn allows describing desirable or undesirable execution paths.  \\
 
 \noindent Iago et. al. formulate the double \textit{lock} error as using Computational Tree Logic (CTL) as follows: 
 
-\todo[inline]{Insert CTL}
+\begin{center}
+    $\top\:\mathrm{EU}\:\left({l o c k}_{\rho} \wedge\:\mathrm{EX}\:\left(\neg {u n l o c k}_{\rho}\:\mathrm{EU}\:{l o c k}_{\rho}\right)\right)$
+\end{center}
 
-\noindent Computation tree logic is in a class of temporal logics that includes linear temporal logic (LTL). 
+\noindent Computation tree logic is in a class of temporal logics that includes linear temporal logic (LTL), modeling program paths in time as a tree-like structure where all paths can be the actual path executed at runtime. The specifics of the CTL formulation is not the focus of this project, instead CTL notation is merely used to formulate which errors are desired found in the Linux kernel components. CTL be used to model all possible executions of a program avoid some undesirable condition - in this case a double-unlock error. \\
 
-\todo[inline]{Quickly describe CTL notation} 
+\noindent This CTL formulation can be visualized as follows: 
 
-The specifics of the CTL formulation is not the focus of this project, instead CTL notation is merely used to formulate which errors are desired found in the Linux kernel components. 
-CTL be used to model all possible executions of a program avoid some undesirable condition - in this case a double-unlock error. 
+\missingfigure[figcolor=white]{CTL visualized}
 
+\noindent The inverse problem - the case of two unlocks being present with no locks in between them - can therefore be formulated in CTL as: 
 
-\noindent This CTL formulation can furthermore be visualized as follows: 
+\begin{center}
+    $\top\:\mathrm{EU}\:\left({u n l o c k}_{\rho} \wedge\:\mathrm{EX}\:\left(\neg {l o c k}_{\rho}\:\mathrm{EU}\:{u n l o c k}_{\rho}\right)\right)$
+\end{center}
 
-\missingfigure[figcolor=white]{CTL}
-
-\noindent This CFL formulation can be used in order to define the inverse problem: the case of two unlocks being present with no locks in between. 
+\noindent Visualized, this looks as follows:
 
 \missingfigure[figcolor=white]{CTL visualized}
 
 \noindent The existing implementation of the EBA analyzer explores the CFG of the Linux kernel components while checking to see that the formulated CFL definition is not present. If such a control flow is found, a bug is possibly present in the analyzed component. 
+
+\todo[inline]{Write more about this approach and how it leads to the final implementation of double-unlock.}
