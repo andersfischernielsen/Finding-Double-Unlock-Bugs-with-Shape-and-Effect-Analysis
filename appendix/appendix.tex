@@ -25,22 +25,22 @@
 \subsection{Evaluation Results}
 
 \begin{verbatim}
-|  File                                                  | Status       | 
-|--------------------------------------------------------|--------------|
-| drivers/block/drbd/drbd_main.c                         | Undetected   | 
-| fs/ubifs/orphan.c                                      | Detected     | 
-| drivers/gpu/drm/nouveau/nouveau_svm.c                  | Undetected   | 
-| fs/btrfs/file.c                                        | Undetected   | 
-| drivers/staging/wilc1000/wilc_wlan.c                   | Undetected   | 
-| drivers/staging/kpc2000/kpc_dma/fileops.c              | Undetected   | 
-| fs/nfs/client.c                                        | Undetected   | 
-| fs/btrfs/file.c                                        | Not run      | 
-| drivers/media/dvb-core/dvbdev.c                        | Not run      | 
-| mm/memory_hotplug.c                                    | Not run      | 
-| sound/soc/codecs/pcm512x.c                             | Not run      | 
-| drivers/target/target_core_user.c                      | Not run      | 
-| drivers/rpmsg/qcom_smd.c                               | Not run      | 
-| drivers/scsi/aacraid/commsup.c                         | Not run      | 
-| drivers/staging/rtl8188eu/os_dep/usb_intf.c            | Not run      | 
-| block/blk-cgroup.c                                     | Not run      | 
+|  File                                            | Status             | 
+|--------------------------------------------------|--------------------|
+| drivers/block/drbd/drbd_main.c                   | Undetected         | 
+| fs/ubifs/orphan.c                                | Detected           | 
+| drivers/gpu/drm/nouveau/nouveau_svm.c            | Undetected         | 
+| fs/btrfs/file.c                                  | Undetected         | 
+| drivers/staging/wilc1000/wilc_wlan.c             | Undetected         | 
+| drivers/staging/kpc2000/kpc_dma/fileops.c        | Undetected         | 
+| fs/nfs/client.c                                  | Undetected         | 
+| fs/btrfs/file.c                                  | Undetected         | 
+| drivers/media/dvb-core/dvbdev.c                  | Stack overflow     | 
+| mm/memory_hotplug.c                              | Undetected         | 
+| sound/soc/codecs/pcm512x.c                       | Undetected         | 
+| drivers/target/target_core_user.c                | Uncaught exception | 
+| drivers/rpmsg/qcom_smd.c                         | Compilation error  | 
+| drivers/scsi/aacraid/commsup.c                   | Compilation error  | 
+| drivers/staging/rtl8188eu/os_dep/usb_intf.c      | Compilation error  | 
+| block/blk-cgroup.c                               | Compilation error  | 
 \end{verbatim}
