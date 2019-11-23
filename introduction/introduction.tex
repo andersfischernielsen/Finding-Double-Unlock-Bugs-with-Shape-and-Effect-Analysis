@@ -13,16 +13,18 @@ Errors in the Linux kernel therefore affect a multitude of devices and therefore
 The results are undefined if this function is called with an uninitialized thread spin lock." \cite{unlockPOSIX} \\
 \end{center}
 
-\noindent If a thread wanting to unlock a lock does not currently hold that lock, the lock has either been unlocked already or has never been locked. This will in both instances lead to undefined behaviour at a kernel level, possibly making the operating system behave in unexpected ways. \\
+\noindent If a thread wanting to unlock a lock does not currently hold that lock, the lock has either been unlocked already or never been locked. This will in both instances lead to undefined behaviour at a kernel level, possibly making the operating system behave in unexpected ways. \\
 
 \noindent Undefined behaviour is problematic since a program depending on undefined behaviour might not break today, but could break in the future. E.g. if a program depending on undefined behaviour has been implemented on an assumption that the output of the undefined behaviour will always be within a certain interval, but due to the nature of undefined behaviour this changes in a compiler update, the program suddenly breaks, leading to a software panic. Undefined behaviour is exactly that - \textit{undefined} - and assumptions can therefore not be made about its output. \\
 
 \noindent Developing a way to detect such errors is desirable in order to allow developers to detect errors in their code, leading to safer programs. An implementation for detecting such errors can furthermore be used as a tool for evaluating the performance of other code analysis tools, such as a tool for automated software repair. Patching the inverse error, a double lock error, could potentially introduce an unwanted double unlock error in the code. An implementation of a double unlock checker could serve as a correctness evaluation tool, and as a test harness for automated double lock repair. \\
 
-\noindent Developing an error checker able to find such double-unlock errors and, furthermore, analyzing its performance on Linux kernel components will answer the question:
+\noindent In this project, we want to answer the question:
 
 \begin{center}
-    \textbf{"What are the results of running a double-unlock error checker implementation on Linux kernel components?"} 
+    \textbf{"What is the performance of a double-unlock error checker implementation when validiation this implementation on the source code of Linux kernel components?"} 
 \end{center}
+
+\noindent We will accomplish this by developing an error checker able to find such double-unlock errors and, furthermore, analyzing its performance on Linux kernel components by running the implementation on a set of confirmed double unlock bugs manually found in the Linux kernel components. 
 
 \noindent This report will detail our approach for detecting such double unlock errors based on previous work, give an overview of the concrete implementation of our approach and finally evaluate the results of validating an assembled set of files known to have bugs in the Linux kernel components.
