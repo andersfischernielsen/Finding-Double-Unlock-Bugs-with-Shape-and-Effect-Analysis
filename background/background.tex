@@ -1,5 +1,7 @@
 \section{Background}
 
+\todo[inline]{Change page break on sections to be without empty page}
+
 The shape-and-effect inference system described by Abal et. al. \cite{Abal2017EffectiveBF} enables \begin{quote}
     "[...] efficient and scalable inter-procedural reasoning about resource manipulation"
 \end{quote}
@@ -16,7 +18,7 @@ The shape-and-effect inference system described by Abal et. al. \cite{Abal2017Ef
     $\top\:\mathrm{EU}\:\left({l o c k}_{\rho} \wedge\:\mathrm{EX}\:\left(\neg {u n l o c k}_{\rho}\:\mathrm{EU}\:{l o c k}_{\rho}\right)\right)$
 \end{center}
 
-\noindent $p$ in the above specifies that we are interested in finding a double lock locking the same memory region, since this is where an infinite spinlock would occur. 
+\noindent $p$ in the above specifies that I am interested in finding a double lock locking the same memory region, since this is where an infinite spinlock would occur. 
 
 \noindent Computation tree logic is in a class of temporal logics that includes linear temporal logic (LTL), modeling program paths in time as a tree-like structure where all paths can be the actual path executed at runtime. The specifics of the CTL formulation is not the focus of this project, instead CTL notation is merely used to formulate which errors are desired found in the Linux kernel components. CTL be used to model all possible executions of a program avoid some undesirable condition - in this case a double-unlock error. \\
 
@@ -35,7 +37,7 @@ The shape-and-effect inference system described by Abal et. al. \cite{Abal2017Ef
     $\top\:\mathrm{EU}\:\left({u n l o c k}_{\rho} \wedge\:\mathrm{EX}\:\left(\neg {l o c k}_{\rho}\:\mathrm{EU}\:{u n l o c k}_{\rho}\right)\right)$
 \end{center}
 
-\noindent $p$ in the above again specifies that we are interested in finding a double unlock locking the same memory region, since this is where the undefined behaviour would occur. \\
+\noindent $p$ in the above again specifies that I am interested in finding a double unlock locking the same memory region, since this is where the undefined behaviour would occur. \\
 
 \noindent The visualization of this can be seen in Fig \ref{fig:doubleunlock}. \\
 
@@ -50,4 +52,4 @@ The shape-and-effect inference system described by Abal et. al. \cite{Abal2017Ef
 
 \noindent The implementation of the EBA analyzer uses a concept of \textit{may lock} and \textit{must lock} internally similar to the concept described in \cite{Godefroid}. A lock within an \texttt{if} statement on a dynamic value is represented as a \textit{may lock}, since it is uncertain whether the \texttt{if} statement will evaluate to \texttt{true} at runtime. On the other hand, a \textit{must lock} is an explicit lock within the code which will always be executed. This concept of \textit{may} and \textit{must} also applies to the double unlock problem, where a \textit{may unlock} is an unlock in an execution branch which might not be executed at runtime. A \textit{must unlock} is an explicit unlock where a lock will always be unlocked at runtime. \\
 
-\noindent The implementation of the EBA analyzer supports implementing separate error checkers in a plug-and-play nature. This allows implementing a double unlock checker as a separate file in the implementation source code and making this available to the user(s) of the analyzer using a command-line parameter. The implementation of our approach has been incorporated into the EBA code base in this fashion. The following section will elaborate on the implementation details of this implementation. 
+\noindent The implementation of the EBA analyzer supports implementing separate error checkers in a plug-and-play nature. This allows implementing a double unlock checker as a separate file in the implementation source code and making this available to the user(s) of the analyzer using a command-line parameter. The implementation of my work has been incorporated into the EBA code base in this fashion. The following section will elaborate on the implementation details of this implementation. 

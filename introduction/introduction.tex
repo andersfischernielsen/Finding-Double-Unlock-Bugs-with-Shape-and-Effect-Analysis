@@ -1,30 +1,33 @@
 \section{Introduction}
 
-\noindent The Linux kernel supports a vast array of computer architectures and runs on a multitude of devices from personal computers to servers and embedded devices from everything from wireless access points to smart TVs, smartphones and refrigerators.
-Errors in the Linux kernel therefore affect a multitude of devices and therefore have a potential significant negative impact. \\
+\noindent The Linux kernel supports a vast array of computer architectures and runs on a multitude of devices from embedded devices, through personal computers to large servers; on wireless
+access points, smart TVs, smartphones, refrigerators.
+Errors in the Linux kernel therefore affect a multitude of devices and can therefore have a potential significant negative impact. \\
 
-\noindent An important aspect of kernel programming is management and manipulation of resources, be it devices, file handles, memory blocks, and locks. Locks are used extensively in the C source code of the Linux kernel in order to allow parallelization of subsystems within the kernel while at the same time avoiding race conditions. Static analysers allow detection of errors in the C source code of the Linux kernel by reasoning about this resource manipulation. A control flow graph can be found for the components of the kernel, which can then in turn be statically analysed to detect possible ressource manipulation errors. \\
+\noindent An important aspect of kernel programming is management and manipulation of resources, be it devices, file handles, memory blocks, and locks. Shared-memory concurrency and locks are used extensively in the C source code of the Linux kernel in order to allow parallelization of subsystems within the kernel while at the same time avoiding race conditions. Static analysers allow detection of errors in the C source code of the Linux kernel by reasoning about this resource manipulation. A control flow graph can be found for the components of the kernel, which can then in turn be statically analysed to detect possible ressource manipulation errors. \\
 
-\noindent One such resource manipulation error is a \textit{double unlock} error. A thread holding a lock and then releasing this lock more than once will result in undefined behaviour, according to the POSIX standard. This standard is an attempt to generate a standard version of UNIX to facilitate application portability and defines how C constructs should be implemented by UNIX OS vendors. The \texttt{pthread.h} file defines the spinlock constructs which are used in the Linux kernel and the accompanying specification is of note here, since this file describes how the structs found in the header should behave. The section describing \texttt{pthread\_spin\_unlock} defines the behaviour of the \texttt{spin\_unlock} unlocking operation of a spinlock observed in the kernel code, and is defined as:
+\noindent One such resource manipulation error is a \textit{double unlock} error. A thread holding a lock and then releasing this lock more than once consecutively will result in undefined behaviour, according to the POSIX standard. This standard is an attempt to generate a standard version of UNIX to facilitate application portability and defines how C constructs should be implemented by UNIX OS vendors. The \texttt{pthread.h} file defines the spinlock constructs which are used in the Linux kernel and the accompanying specification is of note here, since this file describes how the structs found in the header should behave. The section describing \texttt{pthread\_spin\_unlock} defines the behaviour of the \texttt{spin\_unlock} unlocking operation of a spinlock observed in the kernel code, and is defined as:
 
 \begin{center}
-"The results are undefined if the lock is not held by the calling thread.
+``The results are undefined if the lock is not held by the calling thread.
 [...] 
-The results are undefined if this function is called with an uninitialized thread spin lock." \cite{unlockPOSIX} \\
+The results are undefined if this function is called with an uninitialized thread spin lock.`` \cite{unlockPOSIX} \\
 \end{center}
 
-\noindent If a thread wanting to unlock a lock does not currently hold that lock, the lock has either been unlocked already or never been locked. This will in both instances lead to undefined behaviour at a kernel level, possibly making the operating system behave in unexpected ways. \\
+\noindent If a thread wanting to unlock a lock does not currently hold that lock, the lock has either been unlocked already or never been locked. This will in both instances lead to undefined behaviour at the kernel level, possibly making the operating system behave in unexpected ways. \\
 
-\noindent Undefined behaviour is problematic since a program depending on undefined behaviour might not break today, but could break in the future. E.g. if a program depending on undefined behaviour has been implemented on an assumption that the output of the undefined behaviour will always be within a certain interval, but due to the nature of undefined behaviour this changes in a compiler update, the program suddenly breaks, leading to a software panic. Undefined behaviour is exactly that - \textit{undefined} - and assumptions can therefore not be made about its output. \\
+\noindent Undefined behaviour is problematic since a program depending on undefined behaviour might not break today, but could break in the future. E.g. if a program depending on undefined behaviour has been implemented on an assumption that the output of the undefined behaviour will always be within a certain interval, but due to the nature of undefined behaviour this changes in a compiler update, the program suddenly breaks, leading to a software panic. Undefined behaviour is exactly that --- \textit{undefined} --- and assumptions can therefore not be made about its output. \\
+\todo{Undefined behaviour is ... - this entirely paragraph has too long sentences with broken flow.  Read it fluently (relatively fast) aloud - you will see the fixes right away (at the points you stumble naturally).}
 
 \noindent Developing a way to detect such errors is desirable in order to allow developers to detect errors in their code, leading to safer programs. An implementation for detecting such errors can furthermore be used as a tool for evaluating the performance of other code analysis tools, such as a tool for automated software repair. Patching the inverse error, a double lock error, could potentially introduce an unwanted double unlock error in the code. An implementation of a double unlock checker could serve as a correctness evaluation tool, and as a test harness for automated double lock repair. \\
 
-\noindent In this project, we want to answer the question:
+\noindent In this project, I want to answer the question:
 
 \begin{center}
     \textbf{"What is the performance of a double-unlock error checker implementation when validiation this implementation on the source code of Linux kernel components?"} 
 \end{center}
 
-\noindent We will accomplish this by developing an error checker able to find such double-unlock errors and, furthermore, analyzing its performance on Linux kernel components by running the implementation on a set of confirmed double unlock bugs manually found in the Linux kernel components. 
+\noindent I will accomplish this by developing an error checker able to find such double-unlock errors and, furthermore, analyzing its performance on Linux kernel components by running the implementation on a set of confirmed double unlock bugs manually found in the Linux kernel components. 
 
-\noindent This report will detail our approach for detecting such double unlock errors based on previous work, give an overview of the concrete implementation of our approach and finally evaluate the results of validating an assembled set of files known to have bugs in the Linux kernel components.
+\noindent This report will detail my approach for detecting such double unlock errors based on previous work, give an overview of the concrete implementation of my work and finally evaluate the results of validating an assembled set of files known to have bugs in the Linux kernel components.
+\todo{It would be good to add one more paragraph (or rewrite the last one) to more formally summarize the contents of the paper.  "The report proceeds as follows.  In Section 2,  I present the background about double unlock bugs and the EBA bug analyzer.  In Section  3, I present the design and implementation of the double unlock bug finder, the key outcome of this work. Section 4 evaluates the efficiency of my bug finder. In Section 5 ..." (you get the drill)}
