@@ -1,16 +1,11 @@
 \section{Results}
 
-\noindent Given the open source nature of the Linux kernel, the project sees contributions from many developers. Contributions are integrated into the code base using a Distributed Version Control System (DVCS), namely \textit{git}. 
-\\
+\newpar Given the open source nature of the Linux kernel, the project sees contributions from many developers. Contributions are integrated into the code base using a Distributed Version Control System (DVCS), namely \textit{git}. 
 
-\noindent The log of contributions, \textit{commits}, can be queried in order to find patches to errors discovered in the code base. Here I am interested in identifying patches that fix double unlock bugs, accomplished by querying the complete log of all commits to the code base. 
-\\
+\newpar The log of contributions, \textit{commits}, can be queried in order to find patches to errors discovered in the code base. Here I am interested in identifying patches that fix double unlock bugs, accomplished by querying the complete log of all commits to the code base. 
 
-\noindent This allows extracting a set of confirmed bugs, that is bugs which have been fixed by developers. Furthermore, picking a point in time before the patch was merged with the code base allows finding the bug in the code base before it was fixed, allowing verification of our proposed analyzer on an implicitly \textit{confirmed} bug. If a patch has been submitted and accepted in the log, it must implicitly have been confirmed as being an actual bug by the maintainers of the code base. 
-\\
+\newpar This allows extracting a set of confirmed bugs, that is bugs which have been fixed by developers. Furthermore, picking a point in time before the patch was merged with the code base allows finding the bug in the code base before it was fixed, allowing verification of our proposed analyzer on an implicitly \textit{confirmed} bug. If a patch has been submitted and accepted in the log, it must implicitly have been confirmed as being an actual bug by the maintainers of the code base. 
 
-\noindent The accuracy of our proposed code analyzer can be determined by extracting $n$ actual double unlock bugs and seeing whether these true positives are detected by the analyzer. 
-\\
+\newpar The accuracy of our proposed code analyzer can be determined by extracting $n$ actual double unlock bugs and seeing whether these true positives are detected by the analyzer. 
 
-\noindent The following sections will detail the evaluation of the proposed analyzer and highlight interestring cases of bugs that either were or were not detected. 
-\\
+\newpar The following sections will detail the evaluation of the proposed analyzer and highlight interestring cases of bugs that either were or were not detected. 

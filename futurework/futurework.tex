@@ -1,8 +1,14 @@
 \section{Future Work}
 
-\noindent Extending using the implementation of the EBA analyzer has proven to provide a foundation for analyzing the Linux kernel components, allowing building an error checker able to process these files with relative ease. 
-Building error checkers for other error types would allow the EBA analyzer to validate the source code for Linux components while possibly detecting more error types. \\
+\newpar Extending using the implementation of the EBA analyzer has proven to provide a foundation for analyzing the Linux kernel components, allowing building an error checker able to process these files with relative ease. 
+Building error checkers for other error types would allow the EBA analyzer to validate the source code for Linux components while possibly detecting more error types.
 
-\noindent Extending the analyzer in this plugin-style furthermore allows the user(s) of the analyzer to only check for specific error types, speeding up evaluation of source code.
+\newpar Extending the analyzer in this plugin-style furthermore allows the user(s) of the analyzer to only check for specific error types, speeding up evaluation of source code.
 
-\todo[inline]{\texttt{sed} replacements should be fixed in future versions}
+\newpar The \texttt{eba-cil} library used for generating the C intermediate language used by EBA does currently not support constructs found in the output of the GCC compiler heavily used by the Linux kernel developers. These include 
+\begin{itemize}
+    \item \textit{Static Assertions}, added in C11 which has been implemented since since GCC 4.6\footnote{See \cite{ISO:2011:IIIb}}
+    \item \textit{Assembler Instructions with C Expression Operands}, an extension available since GCC 3.1\footnote{See \cite{GCC:3.1}}.
+\end{itemize}
+
+\noindent Currently the output from GCC on input files using these features results in a ParseError in EBA and therefore need to be removed from the output before analyzing this with the EBA analyzer. This negatively impacts the soundness of the analysis due to the potential removal of source code. Supporting these features in the implementation of EBA woul improve the soundness of the analysis and improve the ease-of-use of the analyzer. 
