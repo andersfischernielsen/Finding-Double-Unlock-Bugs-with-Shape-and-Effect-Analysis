@@ -26,13 +26,13 @@ This check verifies that no lock is taken on a region in a given \texttt{step}. 
 \subsubsection{testQ2\_weak}
 This check verifies that an unlock is present in a region with associated effects in a given \texttt{step}. The implementation of this helper can be seen below. 
 
-\begin{verbatim}
+\begin{minted}{ocaml}
 let testQ2_weak st step =
     let must_unlock = E.(mem_must (unlocks ~r:st.reg) step.effs) in
     if must_unlock
     then Some st
     else None
-\end{verbatim}
+\end{minted}
 
 \subsection{May \& Must Modalities}
 \newpar The implementation of the EBA analyzer implements the concept of \textit{may} and \textit{must} for effects of shapes. As mentioned previously, certain effects are not guaranteed to be executed and are therefore of the type \textit{may}. In order to execute a more thorough analysis, the double unlock checker of this project performs both \textit{may} an \textit{must} checking in an attempt to detect more double unlock errors. 

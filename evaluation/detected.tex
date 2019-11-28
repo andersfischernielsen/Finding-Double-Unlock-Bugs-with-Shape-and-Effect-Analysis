@@ -8,9 +8,9 @@
 
 \newpar The full code snippet for this function can be seen in Fig. \ref{fig:orphan.c}.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \begin{verbatim}
+    \begin{minted}{c}
         void ubifs_delete_orphan(struct ubifs_info *c, ino_t inum)
         {
             [...]
@@ -38,7 +38,7 @@
                 return;
             }
         }
-    \end{verbatim}
+    \end{minted}
     \caption{The \texttt{orphan\_delete} function containing a double unlock.}
     \label{fig:orphan.c}
 \end{figure}

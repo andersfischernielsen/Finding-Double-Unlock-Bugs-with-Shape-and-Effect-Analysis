@@ -1,6 +1,6 @@
 FILES = *.tex *.bib */*.tex */images/*.pdf
 
-TEX = pdflatex -synctex=1 -interaction=nonstopmode -file-line-error
+TEX = pdflatex -synctex=1 -interaction=nonstopmode -file-line-error -shell-escape
 BIB = bibtex
 
 default: report.pdf
