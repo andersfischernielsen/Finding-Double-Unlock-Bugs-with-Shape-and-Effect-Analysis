@@ -20,6 +20,34 @@ The results are undefined if this function is called with an uninitialized threa
 
 \newpar Developing a way to detect such errors is desirable in order to allow developers to detect errors in their code, leading to safer programs. An implementation for detecting such errors can furthermore be used as a tool for evaluating the performance of other code analysis tools, such as a tool for automated software repair. Patching the inverse error, a double lock error, could potentially introduce an unwanted double unlock error in the code. An implementation of a double unlock checker could serve as a correctness evaluation tool, and as a test harness for automated double lock repair.
 
+\newpar A reduced example of a double unlock error found in the Linux kernel can be seen in Fig. \ref{fig:introexample}. This example is based on patch \texttt{4dd75b33}\footnote{See \url{https://github.com/torvalds/linux/commit/4dd75b33}} which has been integrated into the Linux kernel.
+
+\begin{figure}[H]
+    \centering
+    \begin{minted}{c}
+        #include "ubifs.h"
+
+        static void orphan_delete(struct ubifs_info *c, struct ubifs_orphan *orph)
+        {
+            if (orph->del) {
+                spin_unlock(&c->orphan_lock);
+                return;
+            }
+            if (orph->cmt) {
+                spin_unlock(&c->orphan_lock);
+                return;
+            }
+        }
+        
+        void ubifs_delete_orphan(struct ubifs_info *c, ino_t inum)
+        {
+            orphan_delete(c, orph);
+            spin_unlock(&c->orphan_lock);
+        }
+    \end{minted}
+    \caption{An example of a double unlock found in the Linux kernel.}
+    \label{fig:introexample}
+\end{figure}
 \newpar In this project, I want to answer the question:
 
 \begin{center}
@@ -30,4 +58,4 @@ The results are undefined if this function is called with an uninitialized threa
 
 \newpar This report will detail my approach for detecting such double unlock errors based on previous work, give an overview of the concrete implementation of my work and finally evaluate the results of validating an assembled set of files known to have bugs in the Linux kernel components.
 
-\newpar Section 2 will present the background for double unlock errors and the EBA analyzer. Section  3 will present the design and implementation of the double unlock error checker --- the key outcome of this work. Section 4 describes the evaluation of the efficiency of the error checker. Section 5 will describe where to go from here in regards to ways to develop future error checkers and extend the EBA analyzer. Section 6 will summarize and conclude the report.
+\newpar Section 2 will present the background for double unlock errors and the EBA analyzer. Section 3 will present the design and implementation of the double unlock error checker --- the key outcome of this work. Section 4 describes the evaluation of the efficiency of the error checker. Section 5 will describe where to go from here in regards to ways to develop future error checkers and extend the EBA analyzer. Section 6 will summarize and conclude the report.
