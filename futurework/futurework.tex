@@ -3,7 +3,7 @@
 \newpar Extending the implementation of the EBA analyzer has proven to be a relatively fast approach for developing error checkers analyzing the Linux kernel, allowing building an error checker that is able to process these files with relative ease. 
 Building error checkers for other error types would allow the EBA analyzer to validate the source code for Linux components while possibly detecting more error types. Extending the analyzer in this way furthermore allows the user(s) of the analyzer to only check for specific error types, speeding up evaluation of source code if only specific checks are desired. 
 
-\newpar Implementing the shortcomings of the prototype of this project explained in the previous section to detect a larger number of true positives should be done by \todo{Explain how to improve accuracy} [...]. This would improve the accuracy and therefore the usefulness of the prototype.
+\newpar Implementing the shortcomings of the prototype of this project explained in the previous section to detect a larger number of true positives should be done by improving the ability of the implementation of the EBA analyzer to detect unlock statements in the source code. This would improve the accuracy and therefore the usefulness of the prototype.
 
 \newpar Implementing the prototype of this project as a finite state machine could potentially result in an implementation with greater accuracy. The implementation of such an approach might prove easier to reason about and debug, though it is unknown if this is the case. I believe the CTL-inspired implementation of this project can be translated into a finite state machine, though this would have to be determined in a future project.
 
