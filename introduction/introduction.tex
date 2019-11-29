@@ -20,7 +20,7 @@ The results are undefined if this function is called with an uninitialized threa
 
 \newpar Developing a way to detect such errors is desirable in order to allow developers to detect errors in their code, leading to safer programs. An implementation for detecting such errors can furthermore be used as a tool for evaluating the performance of other code analysis tools, such as a tool for automated software repair. Patching the inverse error, a double lock error, could potentially introduce an unwanted double unlock error in the code. An implementation of a double unlock checker could serve as a correctness evaluation tool, and as a test harness for automated double lock repair.
 
-\newpar A reduced example of a double unlock error found in the Linux kernel can be seen in Fig. \ref{fig:introexample}. This example is based on patch \texttt{4dd75b33}\footnote{See \url{https://github.com/torvalds/linux/commit/4dd75b33}} which has been integrated into the Linux kernel.
+\newpar A reduced example of a double unlock error found in the Linux kernel can be seen in Fig. \ref{fig:introexample}. This example is based on patch \texttt{4dd75b33}\footnote{See \url{https://github.com/torvalds/linux/commit/4dd75b33}}.
 
 \begin{figure}[H]
     \centering
