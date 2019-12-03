@@ -11,7 +11,7 @@
 \newpar Another improvement to the analyzer would be to improve the parsing of the input files. The \texttt{eba-cil} library used for generating the C intermediate language used by EBA does currently not support constructs found in the output of the GCC compiler heavily used by the Linux kernel developers. These include:
 \begin{itemize}
     \item \textit{Static Assertions}, added in C11 which has been implemented since since GCC 4.6\footnote{See \textit{Programming Languages - C} \cite{ISO:2011:IIIb}}
-    \item \textit{Assembler Instructions with C Expression Operands}, an extension available since GCC 3.1\footnote{See \textit{Assembler Instructions with C Expression Operands} \cite{GCC:3.1}}.
+    \item \textit{Assembler Instructions with C Expression Operands}, an extension available since GCC 3.1\footnote{See \textit{Assembler Instructions with C Expression Operands} \cite{GCC:3.1}}
 \end{itemize}
 
 \noindent Currently the output from GCC on input files using these features results in a parse error in EBA and therefore need to be removed from the compiler output before analysis. This negatively impacts the soundness of the analysis due to the removal of source code. Supporting these features in the implementation of EBA would improve the soundness of the analysis.
