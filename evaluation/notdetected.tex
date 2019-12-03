@@ -1,6 +1,6 @@
 \subsection{False Negatives}
 
-Several false negatives were found during evaluation of the proposed error checker. Out of evaluation on 15 true positives found in the Linux kernel source only 5 were found. This gives the prototype implementation a precision and recall of $5/15=33\%$ due to not having any false positives in the set of evaluation samples. 
+Several false negatives were found during evaluation of the proposed error checker. Out of evaluation on 15 true positives found in the Linux kernel source only 5 were found. This gives the prototype implementation a precision and recall of $33\%$ due to not having any false positives in the set of evaluation samples. 
 
 \newpar Debugging the implementation of the EBA analyzer shows that results in the true positives are lost on the $Q2$ in $p_2\:\mathrm{EU}\:q_2$. This check has been made as general as possible in the implementation of the prototype by only verifying that a \texttt{step} must/may contain an unlock. This unlock check has been implemented using the internal constructs of the implementation of the EBA analyzer and this leads to a suspicion that the unlock check in the internals is imprecise. 
 
