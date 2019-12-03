@@ -1,8 +1,8 @@
 \subsection{True Positives}
 
-\subsubsection{\texttt{4dd75b33}}
+\subsubsection{\texttt{orphan.c}}
 
-\newpar The patch \texttt{4dd75b33} patches a double unlock error in the file \texttt{fs/ubifs/orphan.c}, part of the file system components of the kernel.
+\newpar The patch \texttt{4dd75b33}\footnote{See Fig. \ref{truepositives} in Appendix.} patches a double unlock error in the file \texttt{fs/ubifs/orphan.c}, part of the file system components of the kernel.
 
 \newpar The function \texttt{orphan\_delete} contains two \texttt{if} statements which, if evaluating to \texttt{true} will result in a double unlock of \texttt{\&c->orphan\_lock}, since the function \texttt{ubifs\_delete\_orphan} calls \texttt{orphan\_delete} and then unlock the same pointer value. 
 
