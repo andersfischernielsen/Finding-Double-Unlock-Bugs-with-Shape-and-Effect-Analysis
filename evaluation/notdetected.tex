@@ -1,29 +1,45 @@
 \subsection{False Negatives}
 
-Several false negatives were found during evaluation of the proposed error checker. Out of evaluation on 15 true positives found in the Linux kernel source only 5 were found. This gives the prototype implementation a precision and recall of $33\%$ due to not having any false positives in the set of evaluation samples. 
+Several false negatives were found during evaluation of the proposed error checker. Out of evaluation on 15 true positives found in the Linux kernel source only 5 were found. This gives the prototype implementation a recall of $33\%$ and precision of 100\% due to not having any false positives in the set of evaluation samples. Therefore the precision is clearly biased and needs more investigation. 
 
 \newpar Debugging the implementation of the EBA analyzer shows that results in the true positives are lost on the $Q2$ in $p_2\:\mathrm{EU}\:q_2$. This check has been made as general as possible in the implementation of the prototype by only verifying that a \texttt{step} must/may contain an unlock. This unlock check has been implemented using the internal constructs of the implementation of the EBA analyzer and this leads to a suspicion that the unlock check in the internals is imprecise. 
 
 \newpar Due to the false negatives containing confirmed double unlocks it seems that the unlock check does not detect the second unlock correctly. This proves to be the case, since the implementation of the EBA analyzer only checks \texttt{spinlock}s by default. The implementation supports mutexes used in the Linux kernel, though the use of this feature might lead to more false positives in the existing error checkers. 
 
-\newpar The implementation of the EBA analyzer describes different lock types as \texttt{Axiom}s and are used depending on the parameters passed to the analyzer implementation. The current \texttt{Axiom}s can be seen in Fig. \ref{axioms}.  
+\newpar The implementation of the EBA analyzer describes different lock types as \texttt{Axiom}s and are used depending on the parameters passed to the analyzer implementation. The current \texttt{Axiom}s can be seen in Fig. \ref{axioms}. These \texttt{Axiom}s only describe mutexes and spinlocks as of writing. 
+
+\begin{figure}[H]
+\centering
+\begin{minted}{ocaml}
+if Opts.all_lock_types()
+    then begin
+        add_axiom tbl ax_mutex_lock;
+        add_axiom tbl ax_mutex_lock_nested;
+        add_axiom tbl ax_mutex_lock_interruptible_nested;
+        add_axiom tbl ax_mutex_unlock;
+        add_axiom tbl ax_raw_read_lock;
+        add_axiom tbl ax_raw_read_unlock;
+        add_axiom tbl ax__raw_read_unlock;
+    end
+\end{minted}
+\caption{The \texttt{Axiom}s used if an \texttt{--all-lock-types} parameter is passed to the implementation of the EBA analyzer.}
+\label{axioms}
+\end{figure}
+
+\newpar A number of true positives in the evaluation samples use locks which are not supported in the current \texttt{Axiom}s. Examples of this are patches \texttt{de4ee728}\footnote{See Fig. \ref{truepositives} in Appendix.}, \texttt{fea69916}\footnote{See Fig. \ref{truepositives} in Appendix.} and \texttt{8fca9550}\footnote{See Fig. \ref{truepositives} in Appendix.} where functions \texttt{up\_read}, \texttt{release\_bus} and \texttt{inode\_unlock} are not recognized as unlocking functions by the implementation. The aforementioned \texttt{Axiom}s of the implementation would need to be extended with these functions in order to detect the \texttt{unlock}s. An example of an \texttt{Axiom} definition can be seen in Fig. \ref{axioms:mutexunlock}. Similar implementations have to be developed for all respective unlocks which one would want to detect. 
 
 \begin{figure}[H]
     \centering
     \begin{minted}{ocaml}
-    if Opts.all_lock_types()
-        then begin
-            add_axiom tbl ax_mutex_lock;
-            add_axiom tbl ax_mutex_lock_nested;
-            add_axiom tbl ax_mutex_lock_interruptible_nested;
-            add_axiom tbl ax_mutex_unlock;
-            add_axiom tbl ax_raw_read_lock;
-            add_axiom tbl ax_raw_read_unlock;
-            add_axiom tbl ax__raw_read_unlock;
-        end
+    let ax_mutex_unlock :axiom =
+        let mk _fn _z = function
+            | [Ref(r1,Ptr(Ref(r2,_)))] ->
+                E.(just (reads r1) +. unlocks r2)
+            | _else____________ ->
+                E.none
+        in
+        Axiom("mutex_unlock", mk)
     \end{minted}
-    \caption{The \texttt{Axiom}s used if an \texttt{--all-lock-types} parameter is passed to the implementation of the EBA analyzer.}
-    \label{axioms}
-\end{figure}
-
-\newpar A number of true positives in the evaluation samples use locks which are not supported in the current \texttt{Axiom}s. Examples of this are patches \texttt{de4ee728}\footnote{See Fig. \ref{truepositives} in Appendix.}, \texttt{fea69916}\footnote{See Fig. \ref{truepositives} in Appendix.} and \texttt{8fca9550}\footnote{See Fig. \ref{truepositives} in Appendix.} where functions \texttt{up\_read}, \texttt{release\_bus} and \texttt{inode\_unlock} are not recognized as unlocking functions by the implementation. The aforementioned \texttt{Axiom}s of the implementation would need to be extended with these functions in order to detect the \texttt{unlock}s.  
+    \caption{The \texttt{ax\_mutex\_unlock} \texttt{Axiom} present in the implementation of the EBA analyzer.}
+    \label{axioms:mutexunlock}
+    \end{figure}

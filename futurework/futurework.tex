@@ -4,7 +4,14 @@
 
 \newpar Implementing error checkers for other error types would allow the EBA analyzer to possibly detect more error types when validate the source code for Linux components. Extending the analyzer in this way allows the user(s) of the analyzer to check for specific error types, speeding up evaluation of source code if specific error checks are desired. 
 
-\newpar Implementing the prototype of this project as a monitor state machine could potentially result in an implementation with greater accuracy. The implementation of such an approach might prove easier to reason about and debug, though it is unknown if this is the case. The CTL format properties of the existing checkers can also be implemented as monitor state machines and therefore implemented as automata algorithms. I believe the CTL-inspired implementation of this project can be translated into a finite state machine, though this would have to be determined in a future project. 
+\newpar Implementing the prototype checker using a monitor state machine instead of the limited subset of CTL could potentially result in an implementation with greater accuracy. The implementation of such an approach might prove easier to reason about and debug, though it is unknown if this is the case. An example of such a state machine can be seen in Fig. \ref{fig:statemachine}. The CTL format properties of the existing checkers can also be implemented as monitor state machines and therefore implemented as automata algorithms. I believe the CTL-inspired implementation of this project can be translated into a finite state machine, though this would have to be determined in a future project. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{futurework/figures/state-machine}
+    \caption{An example of a double-unlock monitor state machine.}
+    \label{fig:statemachine}
+\end{figure}
 
 \newpar Implementing the shortcomings of the prototype of this project explained in the previous section in order to detect a larger number of true positives should be done by improving the ability of the implementation of the EBA analyzer to detect unlock statements in the source code. This would improve the accuracy and therefore the usefulness of the prototype.
 
