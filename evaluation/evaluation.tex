@@ -2,10 +2,10 @@
 
 \newpar The open source nature of the Linux kernel means that the project receives contributions from many developers. These contributions are integrated into the code base using the \texttt{git} Distributed Version Control System (DVCS). 
 
-\newpar The log of contributions, git \textit{commits}, can be queried in order to find patches to errors discovered in the code base. Here I am interested in identifying patches that fix double unlock bugs, which are found by querying the log of all commits to the code base. 
+\newpar The log of contributions, git \textit{commits}, can be queried in order to find patches to errors discovered in the code base. Here I am interested in identifying patches that fix double-unlock bugs, which are found by querying the log of all commits to the code base. 
 
 \newpar This approach allows extracting a set of confirmed bugs, that is bugs which have been fixed by developers. Picking a point in time just before the patch was merged with the code base allows finding the bug in the code base before it was fixed, allowing verification of our proposed analyzer on an implicitly \textit{confirmed} bug, since if a patch has been submitted and accepted, it must have been confirmed as being a bug by the maintainers of the code base.
 
-\newpar The accuracy of our proposed code analyzer can be determined by extracting $n$ confirmed double unlock bugs and seeing whether these true positives are detected by the analyzer. 
+\newpar The accuracy of our proposed code analyzer can be determined by extracting $n$ confirmed double-unlock bugs and seeing whether these true positives are detected by the analyzer. 
 
 \newpar The following sections will detail the evaluation of the proposed analyzer and highlight interestring cases of bugs that either were or were not detected. 

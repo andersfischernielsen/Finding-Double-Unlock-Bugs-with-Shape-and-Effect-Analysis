@@ -6,7 +6,7 @@ Errors in the Linux kernel therefore affect a multitude of devices and can there
 
 \newpar An important aspect of kernel programming is management and manipulation of resources, be it devices, file handles, memory blocks, and locks. Shared-memory concurrency and locks are used extensively in the C source code of the Linux kernel in order to allow parallelization of subsystems within the kernel while at the same time avoiding race conditions. Static analysers allow detection of errors in the C source code of the Linux kernel by reasoning about this resource manipulation. A control flow graph can be found for the components of the kernel, which can then in turn be statically analysed to detect possible ressource manipulation errors.
 
-\newpar One such resource manipulation error is a \textit{double unlock} error. A thread holding a lock and then releasing this lock more than once consecutively will result in undefined behaviour, according to the POSIX standard. This standard is an attempt to generate a standard version of UNIX to facilitate application portability and defines how C constructs should be implemented by UNIX OS vendors. The \texttt{pthread.h} file defines the spinlock constructs which are used in the Linux kernel and the accompanying specification is of note here, since this file describes how the structs found in the header should behave. The section describing \texttt{pthread\_spin\_unlock} defines the behaviour of the \texttt{spin\_unlock} unlocking operation of a spinlock observed in the kernel code, and is defined as:
+\newpar One such resource manipulation error is a \textit{double-unlock} error. A thread holding a lock and then releasing this lock more than once consecutively will result in undefined behaviour, according to the POSIX standard. This standard is an attempt to generate a standard version of UNIX to facilitate application portability and defines how C constructs should be implemented by UNIX OS vendors. The \texttt{pthread.h} file defines the spinlock constructs which are used in the Linux kernel and the accompanying specification is of note here, since this file describes how the structs found in the header should behave. The section describing \texttt{pthread\_spin\_unlock} defines the behaviour of the \texttt{spin\_unlock} unlocking operation of a spinlock observed in the kernel code, and is defined as:
 
 \begin{center}
 ``The results are undefined if the lock is not held by the calling thread.
@@ -18,9 +18,9 @@ The results are undefined if this function is called with an uninitialized threa
 
 \newpar Undefined behaviour is problematic since a program depending on undefined behaviour might not break today, but could break in the future. A program implemented on an assumption that the output of the undefined behaviour will always be within a certain interval might behave unexpectedly with changes in a later compiler update. Undefined behaviour is exactly that --- \textit{undefined} --- and assumptions can therefore not be made about its output.
 
-\newpar Developing a way to detect such errors is desirable in order to allow developers to detect errors in their code, leading to safer programs. An implementation for detecting such errors can furthermore be used as a tool for evaluating the performance of other code analysis tools, such as a tool for automated software repair. Patching the inverse error, a double lock error, could potentially introduce an unwanted double unlock error in the code. An implementation of a double unlock checker could serve as a correctness evaluation tool, and as a test harness for automated double lock repair.
+\newpar Developing a way to detect such errors is desirable in order to allow developers to detect errors in their code, leading to safer programs. An implementation for detecting such errors can furthermore be used as a tool for evaluating the performance of other code analysis tools, such as a tool for automated software repair. Patching the inverse error, a double lock error, could potentially introduce an unwanted double-unlock error in the code. An implementation of a double-unlock checker could serve as a correctness evaluation tool, and as a test harness for automated double lock repair.
 
-\newpar A reduced example of a double unlock error found in the Linux kernel can be seen in Fig. \ref{fig:introexample}. This example is based on patch \texttt{4dd75b33}\footnote{See \url{https://github.com/torvalds/linux/commit/4dd75b33}}.
+\newpar A reduced example of a double-unlock error found in the Linux kernel can be seen in Fig. \ref{fig:introexample}. This example is based on patch \texttt{4dd75b33}\footnote{See \url{https://github.com/torvalds/linux/commit/4dd75b33}}.
 
 \begin{figure}[H]
     \centering
@@ -45,7 +45,7 @@ The results are undefined if this function is called with an uninitialized threa
             spin_unlock(&c->orphan_lock);
         }
     \end{minted}
-    \caption{An example of a double unlock found in the Linux kernel.}
+    \caption{An example of a double-unlock found in the Linux kernel.}
     \label{fig:introexample}
 \end{figure}
 \newpar In this project, I want to answer the question:
@@ -54,8 +54,8 @@ The results are undefined if this function is called with an uninitialized threa
     \textbf{"What is the performance of a double-unlock error checker prototype implementation when run on the source code of Linux kernel components?"} 
 \end{center}
 
-\newpar I will accomplish this by developing an error checker able to find such double-unlock errors and, furthermore, analyzing its performance on Linux kernel components by running the implementation on a set of confirmed double unlock bugs manually found in the Linux kernel components.
+\newpar I will accomplish this by developing an error checker able to find such double-unlock errors and, furthermore, analyzing its performance on Linux kernel components by running the implementation on a set of confirmed double-unlock bugs manually found in the Linux kernel components.
 
-\newpar This report will detail my approach for detecting such double unlock errors based on previous work, give an overview of the concrete implementation of my work and finally evaluate the results of validating an assembled set of files known to have bugs in the Linux kernel components.
+\newpar This report will detail my approach for detecting such double-unlock errors based on previous work, give an overview of the concrete implementation of my work and finally evaluate the results of validating an assembled set of files known to have bugs in the Linux kernel components.
 
-\newpar Section 2 will present the background for double unlock errors and the EBA analyzer. Section 3 will present the design and implementation of the double unlock error checker --- the key outcome of this work. Section 4 describes the evaluation of the efficiency of the error checker. Section 5 will describe where to go from here in regards to ways to develop future error checkers and extend the EBA analyzer. Section 6 will summarize and conclude the report.
+\newpar Section 2 will present the background for double-unlock errors and the EBA analyzer. Section 3 will present the design and implementation of the double-unlock error checker --- the key outcome of this work. Section 4 describes the evaluation of the efficiency of the error checker. Section 5 will describe where to go from here in regards to ways to develop future error checkers and extend the EBA analyzer. Section 6 will summarize and conclude the report.

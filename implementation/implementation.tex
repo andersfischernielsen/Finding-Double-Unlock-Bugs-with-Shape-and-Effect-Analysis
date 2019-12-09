@@ -1,18 +1,18 @@
-\section{Finding Double Unlock Bugs}
+\section{Finding Double-Unlock Bugs}
 
-\newpar The implementation of my work has been integrated in the EBA code base and contributed to the project as a pull request as a prototype. This section describes the implementation of this double unlock checker.
+\newpar The implementation of my work has been integrated in the EBA code base and contributed to the project as a pull request as a prototype. This section describes the implementation of this double-unlock checker.
 
 \subsection{Checker Signature}
 
 \newpar The EBA analyzer is implemented in a manner such that all checkers adhere to a unified interface --- a signature. This signature mimics the CTL definition of the double locks in that the analyzer expects four functions to be implemented in order to satisfy $p_1\:\mathrm{EU}\:q_1\:\mathrm{X}(p_2\:\mathrm{EU}\:q_2)$, matching the CTL shown in the previous section. All checkers implement four checks, $p_1$, $q_1$, $p_2$ and $q_2$ respectively, all returning a matching value. The reachability of evaluating the functions within the aforementioned CTL expression is then evaluated by the outer layers of the implementation of the EBA analyzer. An error has been detected in the program if a reachable node is found. 
 
-\newpar These four functions are defined in a signature, \texttt{Spec} in the EBA implementation, which defines the aforementioned checker functions and other helper functions a given checker must implement in order to interface with the outer parts of the analyzer. The implementation of the EBA analyzer has not been modified significantly instead the implementation of the double unlock checker of this project simply implements the signature of the analyzer in order to run. 
+\newpar These four functions are defined in a signature, \texttt{Spec} in the EBA implementation, which defines the aforementioned checker functions and other helper functions a given checker must implement in order to interface with the outer parts of the analyzer. The implementation of the EBA analyzer has not been modified significantly instead the implementation of the double-unlock checker of this project simply implements the signature of the analyzer in order to run. 
 
-\subsection{Implementing a Double Unlock Checker}
+\subsection{Implementing a Double-Unlock Checker}
 
 \newpar The aforementioned functions are named \texttt{testP1}, \texttt{testQ1}, \texttt{testP2}, \texttt{testQ2\_weak} in the \texttt{Spec}, respectively. These functions take so-called \texttt{step}s in the CFG of the input program and evaluate to an \texttt{Option} value. The \texttt{Option} will be \texttt{None} if the function did not match, otherwise \texttt{Some(step)}. 
 
-\newpar The double unlock checker of this project implements these as follows: 
+\newpar The double-unlock checker of this project implements these as follows: 
 
 \subsubsection{testP1}
 This check is implemented as a lift of the input step value to an \texttt{Option}, thereby matching all input values and allowing the following checks to execute.
@@ -35,7 +35,7 @@ let testQ2_weak st step =
 \end{minted}
 
 \subsection{May \& Must Modalities}
-\newpar The implementation of the EBA analyzer implements the concept of \textit{may} and \textit{must} for effects of shapes. As mentioned previously, certain effects are not guaranteed to be executed and are therefore of the type \textit{may}. In order to execute a more thorough analysis, the double unlock checker of this project performs both \textit{may} an \textit{must} checking in an attempt to detect more double unlock errors. 
+\newpar The implementation of the EBA analyzer implements the concept of \textit{may} and \textit{must} for effects of shapes. As mentioned previously, certain effects are not guaranteed to be executed and are therefore of the type \textit{may}. In order to execute a more thorough analysis, the double-unlock checker of this project performs both \textit{may} an \textit{must} checking in an attempt to detect more double-unlock errors. 
 
 \newpar Two passed are performed over a given input CFG in order to accomplish this. These two passes can be expressed as extensions to the aforementioned CTL as 
 \begin{center}
@@ -48,4 +48,4 @@ let testQ2_weak st step =
 
 \newpar Together these functions satisfy $\top\:\mathrm{EU}\:unlocks\:\mathrm{X}(\neg locks\:\mathrm{EU}\:unlocks)$. If a reachable path satisfying this is found within the CFG of a Linux kernel component a possible error is found.
 
-\newpar The source code of the implementation of the EBA analyzer is hosted publicly  on GitHub\footnote{\url{https://github.com/iagoabal/eba}} and the implementation of the double unlock checker of this project has been submitted to the EBA project as a Pull Request\footnote{\url{https://github.com/IagoAbal/eba/pull/5}}, extending the capabilities of the analyzer. 
+\newpar The source code of the implementation of the EBA analyzer is hosted publicly  on GitHub\footnote{\url{https://github.com/iagoabal/eba}} and the implementation of the double-unlock checker of this project has been submitted to the EBA project as a Pull Request\footnote{\url{https://github.com/IagoAbal/eba/pull/5}}, extending the capabilities of the analyzer. 

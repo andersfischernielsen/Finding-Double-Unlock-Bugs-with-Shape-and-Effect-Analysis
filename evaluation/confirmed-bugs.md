@@ -3,7 +3,7 @@ fontsize: 8pt
 geometry: landscape,margin=0.5in
 ---
 
-# Confirmed Double Unlock Bugs
+# Confirmed Double-Unlock Bugs
 
 |  File                                             | Present in                               | Fixed in                                 |
 |---------------------------------------------------|------------------------------------------|------------------------------------------|

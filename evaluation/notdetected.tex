@@ -4,7 +4,7 @@ Several false negatives were found during evaluation of the proposed error check
 
 \newpar Debugging the implementation of the EBA analyzer shows that results in the true positives are lost on the $Q2$ in $p_2\:\mathrm{EU}\:q_2$. This check has been made as general as possible in the implementation of the prototype by only verifying that a \texttt{step} must/may contain an unlock. This unlock check has been implemented using the internal constructs of the implementation of the EBA analyzer and this leads to a suspicion that the unlock check in the internals is imprecise. 
 
-\newpar Due to the false negatives containing confirmed double unlocks it seems that the unlock check does not detect the second unlock correctly. This proves to be the case, since the implementation of the EBA analyzer only checks \texttt{spinlock}s by default. The implementation supports mutexes used in the Linux kernel, though the use of this feature might lead to more false positives in the existing error checkers. 
+\newpar Due to the false negatives containing confirmed double-unlocks it seems that the unlock check does not detect the second unlock correctly. This proves to be the case, since the implementation of the EBA analyzer only checks \texttt{spinlock}s by default. The implementation supports mutexes used in the Linux kernel, though the use of this feature might lead to more false positives in the existing error checkers. 
 
 \newpar The implementation of the EBA analyzer describes different lock types as \texttt{Axiom}s and are used depending on the parameters passed to the analyzer implementation. The current \texttt{Axiom}s can be seen in Fig. \ref{axioms}. These \texttt{Axiom}s only describe mutexes and spinlocks as of writing. 
 
